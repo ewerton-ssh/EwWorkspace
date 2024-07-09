@@ -1,0 +1,165 @@
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-family: 'Lato', sans-serif;
+	line-height: 1;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+:root {
+	--sidebar-background-color: #18122a;
+	--active-sidebar-link-color: #000000;
+	--hover-sidebar-link-color: #433c68;
+	--active-link-color: #000000;
+	--tooltip-background-color: #433c68;
+	--tooltip-text-color: #F5F6F8;
+}
+
+.titlebar {
+	align-items: center;
+	display: flex;
+	background-color: var(--sidebar-background-color);
+	height: 30px;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title {
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	color: var(--tooltip-text-color);
+	margin-left: 80px;
+}
+
+.titlebar .title {
+	flex-grow: 1;
+	text-align: center;
+}
+
+.actButtons {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	width: 80px;
+	background-color: var(--sidebar-background-color);
+	align-items: center;
+	left: 0;
+	top: 0;
+}
+
+.actButtons button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	height: 100%;
+}
+
+.actIcon {
+	width: 26px;
+	height: 20px;
+}
+
+.actButtons button:hover {
+	background-color: var(--tooltip-background-color);
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 50px;
+	background-color: var(--sidebar-background-color);
+	align-items: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.sidebar button {
+	background: none;
+	border: none;
+	padding: 10px 5px;
+	cursor: pointer;
+	position: relative;
+}
+
+.sidebar .icon {
+	width: 30px;
+	height: 30px;
+	transition: all ease 450ms;
+}
+
+.sidebar button .tooltip {
+	position: absolute;
+	top: 50%;
+	left: 60px;
+	transform: translateY(-50%);
+	background-color: var(--tooltip-background-color);
+	color: var(--tooltip-text-color);
+	padding: 8px 15px;
+	border-radius: 3px;
+	opacity: 0;
+	visibility: hidden;
+	font-size: 13px;
+	letter-spacing: .5px;
+	z-index: 3;
+}
+
+.sidebar button .tooltip::before {
+	content: '';
+	display: block;
+	position: absolute;
+	left: -4px;
+	top: 10px;
+	transform: rotate(45deg);
+	width: 10px;
+	height: 10px;
+	background-color: inherit;
+}
+
+.sidebar button:hover {
+	background-color: var(--hover-sidebar-link-color);
+	width: 100%;
+}
+
+.sidebar button:hover .tooltip {
+	visibility: visible;
+	opacity: 1;
+}
+
+.sidebar button.active {
+	background-color: var(--active-sidebar-link-color);
+}
+
+.sidebar img {
+	height: 30px;
+	width: 30px;
+}
+
+.webview-container {
+	margin-left: 50px;
+	flex-grow: 1;
+	display: flex;
+	align-items: stretch;
+	width: calc(100% - 50px);
+	position: relative;
+}
+
+.webview-container .webview {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.webview-container .webview.active {
+	display: block;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  <title>EwWorkspace</title>
+  <link rel="stylesheet" href="index.css">
+  <script defer src="renderer.js"></script>
+</head>
+
+<body>
+  
+  <div class="titlebar">
+    <p class="title" style="-webkit-app-region: drag;">EwWorkspace</p>
+    <div class="actButtons">
+      <button id="minimizeBtn">
+        <img class="actIcon" src="./components/Titlebar/icons/minimize.svg" />
+      </button>
+      <button id="maximizeBtn">
+        <img class="actIcon" src="./components/Titlebar/icons/maximize.svg" />
+      </button>
+      <button id="closeBtn">
+        <img class="actIcon" src="./components/Titlebar/icons/close.svg" />   
+      </button>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <img src="./assets/ewworkspace.png" />
+    <button id="btnGmail">
+      <img src='./components/Sidebar/icons/gmail.png' alt="Gmail" class="icon" />
+      <span class="tooltip">Gmail</span>
+    </button>
+    <button id="btnCalendar">
+      <img src='./components/Sidebar/icons/googleCalendar.png' alt="Calendar" class="icon" />
+      <span class="tooltip">Calendar</span>
+    </button>
+    <button id="btnDrive">
+      <img src='./components/Sidebar/icons/googleDrive.png' alt="Drive" class="icon" />
+      <span class="tooltip">Drive</span>
+    </button>
+    <button id="btnSheets">
+      <img src='./components/Sidebar/icons/googleSheets.png' alt="Sheets" class="icon" />
+      <span class="tooltip">Sheets</span>
+    </button>
+    <button id="btnDocs">
+      <img src='./components/Sidebar/icons/googleDocs.png' alt="Docs" class="icon" />
+      <span class="tooltip">Docs</span>
+    </button>
+    <button id="btnWhatsapp">
+      <img src='./components/Sidebar/icons/whatsapp.png' alt="Whatsapp" class="icon" />
+      <span class="tooltip">Whatsapp</span>
+    </button>
+    <button id="btnNotion">
+      <img src='./components/Sidebar/icons/notion.png' alt="Notion" class="icon" />
+      <span class="tooltip">Notion</span>
+    </button>
+  </div>
+  
+  <div class="webview-container">
+    <webview allowpopups id="webview-gMail" src="https://mail.google.com/" style="width:100%;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
+    <webview allowpopups id="webview-gCalendar" src="https://calendar.google.com/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
+    <webview allowpopups id="webview-gDrive" src="https://drive.google.com/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
+    <webview allowpopups id="webview-gSheets" src="https://docs.google.com/spreadsheets/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
+    <webview allowpopups id="webview-gDocs" src="https://docs.google.com/document/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
+    <webview allowpopups id="webview-whatsapp" src="https://web.whatsapp.com/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
+    <webview allowpopups id="webview-notion" src="https://www.notion.so/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
+  </div>
+  
+</body>
+
+</html>

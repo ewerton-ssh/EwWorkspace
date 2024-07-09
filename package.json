@@ -1,0 +1,37 @@
+{
+  "name": "ewworkspace",
+  "version": "1.0.0",
+  "description": "Google and other app's workspace",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "ewerton-ssh",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^31.1.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.ewworkspace.app",
+    "productName": "EwWorkspace",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "src/assets/ewworkspace.png"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/ewworkspace.ico"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "src/assets/ewworkspace.png"
+    }
+  }
+}
