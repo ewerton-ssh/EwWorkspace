@@ -1,16 +1,16 @@
 {
-  "name": "ewworkspace",
+  "name": "EwWorkspace",
   "version": "1.0.0",
-  "description": "Google and other app's workspace",
+  "description": "Google, Whatsapp and other app's workspace",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "build": "electron-builder"
   },
   "author": "ewerton-ssh",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "electron": "^31.1.0",
     "electron-builder": "^24.13.3"
@@ -27,11 +27,15 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "src/assets/ewworkspace.ico"
+      "icon": "src/assets/ewworkspace.ico",
+      "appId": "EwWorkspace"
     },
     "linux": {
       "target": "AppImage",
       "icon": "src/assets/ewworkspace.png"
     }
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.7"
   }
 }

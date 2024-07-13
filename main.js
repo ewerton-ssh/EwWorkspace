@@ -1,57 +1,94 @@
 const { app, BrowserWindow, Menu, MenuItem, ipcMain } = require('electron');
 const path = require('path');
+const sqlite3 = require('sqlite3').verbose();
 
 let mainWindow;
 
-const createBrowserWindow = () => {
-  mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 768,
-    icon: path.join(__dirname, './src/assets/gmail.ico'),
-    frame: false,
-    autoHideMenuBar: true,
-    webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
-      nativeWindowOpen: true,
-      devTools: true,
-      contextIsolation: true,
-      webviewTag: true,
-      preload: path.join(__dirname, './src/preload.js'),
-    }
+app.whenReady().then(() => {
+  const dbPath = path.join(app.getPath('userData'), 'shortcuts.db');
+  const db = new sqlite3.Database(dbPath);
+
+  db.serialize(() => {
+    db.run("CREATE TABLE IF NOT EXISTS shortcuts (id INTEGER PRIMARY KEY, name TEXT, link TEXT)");
   });
 
-  mainWindow.loadFile(path.join(__dirname, './src/index.html'));
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+  ipcMain.on('saveShortcut', (event, shortcut) => {
+    db.get("SELECT COUNT(*) AS count FROM shortcuts", (err, row) => {
+      if (err) {
+        return;
+      }
+  
+      if (row.count < 8) {
+        db.run("INSERT INTO shortcuts (name, link) VALUES (?, ?)", [shortcut.name, shortcut.link], function (err) {
+          if (err) {
+            return;
+          }
+        });
+  
+        mainWindow.webContents.send('loadShortcut', shortcut);
+      } else {
+        mainWindow.webContents.send('loadShortcut', { "type": "exceeded"});
+      }
+    });
   });
 
-  mainWindow.maximize();
+  const createBrowserWindow = () => {
+    mainWindow = new BrowserWindow({
+      width: 1024,
+      height: 768,
+      icon: path.join(__dirname, './src/assets/ewworkspace.ico'),
+      frame: false,
+      autoHideMenuBar: true,
+      webPreferences: {
+        nodeIntegration: true,
+        enableRemoteModule: true,
+        nativeWindowOpen: true,
+        devTools: true,
+        contextIsolation: false,
+        webviewTag: true,
+        preload: path.join(__dirname, './src/preload.js'),
+      }
+    });
 
-  return mainWindow;
-};
+    mainWindow.loadFile(path.join(__dirname, './src/index.html'));
 
-const createMenu = () => {
-  const template = [
-    {
-      label: 'Sair',
-      click: (menuItem, browserWindow) => {
-        if (browserWindow) {
-          browserWindow.close();
+    mainWindow.on('closed', () => {
+      mainWindow = null;
+    });
+
+    mainWindow.maximize();
+
+    return mainWindow;
+  };
+
+  const createMenu = () => {
+    const template = [
+      {
+        label: 'Sair',
+        click: (menuItem, browserWindow) => {
+          if (browserWindow) {
+            browserWindow.close();
+          }
         }
       }
-    }
-  ];
+    ];
 
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
-};
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
+  };
 
-app.whenReady().then(() => {
   createMenu();
 
   mainWindow = createBrowserWindow();
+
+  db.all("SELECT * FROM shortcuts", [], (err, rows) => {
+    if (err) {
+      throw err;
+    }
+    rows.forEach((row) => {
+      mainWindow.webContents.send('loadShortcut', row);
+    });
+  });
 
   const contextMenu = new Menu();
   contextMenu.append(new MenuItem({ role: 'copy', label: 'Copiar' }));
@@ -83,40 +120,56 @@ app.whenReady().then(() => {
     });
   });
 
-});
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createBrowserWindow();
+    }
+  });
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createBrowserWindow();
-  }
-});
+  app.setAppUserModelId('☄️ EwWorkspace');
 
-ipcMain.on('minimizeApp', () => {
-  if (mainWindow) {
-    mainWindow.minimize();
-  }
-});
+  ipcMain.on('minimizeApp', () => {
+    if (mainWindow) {
+      mainWindow.minimize();
+    }
+  });
 
-let maximized = true;
+  let maximized = true;
 
-ipcMain.on('maximizeApp', () => {
-    if(maximized === true){
+  ipcMain.on('maximizeApp', () => {
+    if (maximized === true) {
       mainWindow.unmaximize();
       maximized = false;
     } else {
       mainWindow.maximize();
       maximized = true;
     }
-});
+  });
 
-ipcMain.on('closeApp', () => {
-  if (mainWindow) {
-    mainWindow.close();
-  }
+  ipcMain.on('closeApp', () => {
+    if (mainWindow) {
+      mainWindow.close();
+    }
+  });
+
+  ipcMain.on('deleteShortcut', (event, shortcutId) => {
+    db.run("DELETE FROM shortcuts WHERE name = ?", [shortcutId], function (err) {
+      if (err) {
+        return;
+      } else {
+        const reload = {
+          "type": "reload",
+          "name": `${shortcutId}`
+        }
+        mainWindow.webContents.send('loadShortcut', reload);
+      }
+    });
+  });
+
 });

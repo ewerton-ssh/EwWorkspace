@@ -10,10 +10,10 @@
 </head>
 
 <body>
-  
-  <div class="titlebar">
-    <p class="title" style="-webkit-app-region: drag;">EwWorkspace</p>
-    <div class="actButtons">
+
+  <div class="titlebar" style="-webkit-app-region: drag;">
+    <p class="title">EwWorkspace</p>
+    <div class="actButtons" style="-webkit-app-region: no-drag">
       <button id="minimizeBtn">
         <img class="actIcon" src="./components/Titlebar/icons/minimize.svg" />
       </button>
@@ -21,53 +21,84 @@
         <img class="actIcon" src="./components/Titlebar/icons/maximize.svg" />
       </button>
       <button id="closeBtn">
-        <img class="actIcon" src="./components/Titlebar/icons/close.svg" />   
+        <img class="actIcon" src="./components/Titlebar/icons/close.svg" />
       </button>
     </div>
   </div>
 
-  <div class="sidebar">
-    <img src="./assets/ewworkspace.png" />
-    <button id="btnGmail">
-      <img src='./components/Sidebar/icons/gmail.png' alt="Gmail" class="icon" />
+  <div class="sidebar" style="-webkit-app-region: drag;">
+    <img class="appFavicon" src="./assets/ewworkspace.png" />
+    <button id="Gmail">
+      <img id="gmailIcon" src='./components/Sidebar/icons/gmail.png' alt="Gmail" class="icon" />
       <span class="tooltip">Gmail</span>
     </button>
-    <button id="btnCalendar">
+    <button id="Gcalendar">
       <img src='./components/Sidebar/icons/googleCalendar.png' alt="Calendar" class="icon" />
       <span class="tooltip">Calendar</span>
     </button>
-    <button id="btnDrive">
+    <button id="Gdrive">
       <img src='./components/Sidebar/icons/googleDrive.png' alt="Drive" class="icon" />
       <span class="tooltip">Drive</span>
     </button>
-    <button id="btnSheets">
-      <img src='./components/Sidebar/icons/googleSheets.png' alt="Sheets" class="icon" />
-      <span class="tooltip">Sheets</span>
-    </button>
-    <button id="btnDocs">
-      <img src='./components/Sidebar/icons/googleDocs.png' alt="Docs" class="icon" />
-      <span class="tooltip">Docs</span>
-    </button>
-    <button id="btnWhatsapp">
-      <img src='./components/Sidebar/icons/whatsapp.png' alt="Whatsapp" class="icon" />
+    <button id="Whatsapp">
+      <img id="whatsappIcon" src='./components/Sidebar/icons/whatsapp.png' alt="Whatsapp" class="icon" />
       <span class="tooltip">Whatsapp</span>
     </button>
-    <button id="btnNotion">
-      <img src='./components/Sidebar/icons/notion.png' alt="Notion" class="icon" />
-      <span class="tooltip">Notion</span>
+    <button id="addShortcut">
+      <img src='./components/Sidebar/icons/add.svg' alt="Add" class="icon" />
+      <span class="tooltip">Adicionar Atalho</span>
     </button>
   </div>
-  
+
   <div class="webview-container">
-    <webview allowpopups id="webview-gMail" src="https://mail.google.com/" style="width:100%;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
-    <webview allowpopups id="webview-gCalendar" src="https://calendar.google.com/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
-    <webview allowpopups id="webview-gDrive" src="https://drive.google.com/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
-    <webview allowpopups id="webview-gSheets" src="https://docs.google.com/spreadsheets/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
-    <webview allowpopups id="webview-gDocs" src="https://docs.google.com/document/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
-    <webview allowpopups id="webview-whatsapp" src="https://web.whatsapp.com/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
-    <webview allowpopups id="webview-notion" src="https://www.notion.so/" style="width:100%; display:none;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"></webview>
+    <webview allowpopups id="webviewGmail" src="https://mail.google.com/" style="width:100%;"
+      useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36">
+    </webview>
+    <webview allowpopups id="webviewGcalendar" src="https://calendar.google.com/" style="width:100%; display:none;"
+      useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36">
+    </webview>
+    <webview allowpopups id="webviewGdrive" src="https://drive.google.com/" style="width:100%; display:none;"
+      useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36">
+    </webview>
+    <webview allowpopups id="webviewWhatsapp" src="https://web.whatsapp.com/" style="width:100%; display:none;"
+      useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36">
+    </webview>
   </div>
-  
+
+  <div id="addShortcutModal" class="modal">
+    <div class="modal-content form">
+      <span class="close" id="closeModal">&times;</span>
+      <div class="modal-title">Adicionar Atalho</div>
+      <form id="addShortcutForm">
+        <div class="input-container ic1">
+          <input type="text" id="shortcutName" class="input" name="shortcutName" placeholder=" " required>
+          <div class="cut"></div>
+          <label for="shortcutName" class="placeholder">Nome</label>
+        </div>
+        <div class="input-container ic2">
+          <input type="text" id="shortcutLink" class="input" name="shortcutLink" placeholder=" " required
+            pattern="https://.*" title="O link deve começar com https://">
+          <div class="cut cut-short"></div>
+          <label for="shortcutLink" class="placeholder">Link</label>
+        </div>
+        <button class="submit save" type="submit">Salvar</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="limitExceededModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-title">Limite de Atalhos Excedido!</div>
+      <form id="limitExceededModalAccept">
+        <button class="submit" type="submit">Ok</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="context-menu" class="context-menu">
+    <div id="print-id" class="context-menu-item">Delete App</div>
+  </div>
+
 </body>
 
 </html>
