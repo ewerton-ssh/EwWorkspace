@@ -52,6 +52,8 @@ const calculateLayoutSize = () => {
 
 window.addEventListener("DOMContentLoaded", () => {
 
+  window.onresize = calculateLayoutSize;
+
   document.querySelector("#minimizeBtn").onclick = () => actBtn("minimizeApp");
   document.querySelector("#maximizeBtn").onclick = () => actBtn("maximizeApp");
   document.querySelector("#closeBtn").onclick = () => actBtn("closeApp");
@@ -64,7 +66,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById('limitExceededModalAccept').addEventListener('submit', closeExceededModal);
 
-  window.onresize = calculateLayoutSize;
+  calculateLayoutSize();
 });
 
 function openModal() {
