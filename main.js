@@ -27,7 +27,6 @@ app.whenReady().then(() => {
         });
 
         mainWindow.webContents.send('loadShortcut', shortcut);
-        mainWindow.webContents.send('loadShortcut', shortcut);
       } else {
         mainWindow.webContents.send('loadShortcut', { "type": "exceeded" });
       }
