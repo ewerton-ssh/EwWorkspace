@@ -3,6 +3,7 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 
 let mainWindow;
+let loadingScreen;
 
 app.whenReady().then(() => {
   const dbPath = path.join(app.getPath('userData'), 'shortcuts.db');
@@ -17,28 +18,46 @@ app.whenReady().then(() => {
       if (err) {
         return;
       }
-  
+
       if (row.count < 8) {
         db.run("INSERT INTO shortcuts (name, link) VALUES (?, ?)", [shortcut.name, shortcut.link], function (err) {
           if (err) {
             return;
           }
         });
-  
+
+        mainWindow.webContents.send('loadShortcut', shortcut);
         mainWindow.webContents.send('loadShortcut', shortcut);
       } else {
-        mainWindow.webContents.send('loadShortcut', { "type": "exceeded"});
+        mainWindow.webContents.send('loadShortcut', { "type": "exceeded" });
       }
     });
   });
 
+  const createLoadingScreen = () => {
+    loadingScreen = new BrowserWindow({
+      width: 400,
+      height: 400,
+      frame: false,
+      transparent: true,
+      icon: path.join(__dirname, './src/assets/ewworkspace.ico'),
+      webPreferences: {
+        nodeIntegration: true,
+      },
+    });
+
+    loadingScreen.loadFile(path.join(__dirname, './src/loading.html'));
+    loadingScreen.on('closed', () => (loadingScreen = null));
+  };
+
   const createBrowserWindow = () => {
     mainWindow = new BrowserWindow({
-      width: 1024,
-      height: 768,
+      width: 1440,
+      height: 1080,
       icon: path.join(__dirname, './src/assets/ewworkspace.ico'),
       frame: false,
       autoHideMenuBar: true,
+      show: false,
       webPreferences: {
         nodeIntegration: true,
         enableRemoteModule: true,
@@ -56,7 +75,13 @@ app.whenReady().then(() => {
       mainWindow = null;
     });
 
-    mainWindow.maximize();
+    mainWindow.webContents.on('did-finish-load', () => {
+      if (loadingScreen) {
+        loadingScreen.close();
+      }
+      mainWindow.show();
+      mainWindow.maximize();
+    });
 
     return mainWindow;
   };
@@ -79,6 +104,7 @@ app.whenReady().then(() => {
 
   createMenu();
 
+  createLoadingScreen();
   mainWindow = createBrowserWindow();
 
   db.all("SELECT * FROM shortcuts", [], (err, rows) => {
@@ -171,5 +197,4 @@ app.whenReady().then(() => {
       }
     });
   });
-
 });

@@ -1,0 +1,46 @@
+<!-- loading.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: transparent;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        .loader {
+            width: 120px;
+            height: 20px;
+            transform: skewX(-45deg);
+            background:
+                linear-gradient(#155EC4 0 0) left -30px top 0/30px 20px no-repeat #fff;
+            animation: l3 1s infinite linear;
+        }
+        @keyframes l3 {
+            100% {
+                background-position: right -30px top 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./assets/ewworkspace.png"/>
+    <div class="loader"></div>
+</body>
+
+</html>
