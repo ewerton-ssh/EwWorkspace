@@ -14,12 +14,13 @@ const calculateLayoutSize = () => {
   function switchApp(button) {
     appKeys.forEach(key => {
       const webviewDOM = document.querySelector(`#webview${key}`);
-      
+      const buttonDOM = document.querySelector(`#${key}`);
       if (webviewDOM) {
         webviewDOM.style.display = `webview${button}` === webviewDOM.id ? '' : 'none';
+        buttonDOM.style.backgroundColor = button === buttonDOM.id? '#433c68' : '';
       }
     });
-  };
+  }
 
   appKeys.forEach((buttons) => {
     if (buttons === 'addShortcut') {
@@ -48,6 +49,16 @@ const calculateLayoutSize = () => {
   
   updateIconNotification('webviewGmail', 'gmailIcon', './components/Sidebar/icons/gmailNotified.png', './components/Sidebar/icons/gmail.png');
   updateIconNotification('webviewWhatsapp', 'whatsappIcon', './components/Sidebar/icons/whatsappNotified.png', './components/Sidebar/icons/whatsapp.png');  
+
+  document.getElementById('shortcutName').addEventListener('keydown', function(event) {
+    if (event.key === ' ') {
+      event.preventDefault();
+    }
+  });
+
+  document.getElementById('shortcutName').addEventListener('input', function(event) {
+    this.value = this.value.replace(/\s+/g, '');
+  });
 };
 
 window.addEventListener("DOMContentLoaded", () => {

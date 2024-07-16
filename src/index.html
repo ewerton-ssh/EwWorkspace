@@ -28,7 +28,7 @@
 
   <div class="sidebar" style="-webkit-app-region: drag;">
     <img class="appFavicon" src="./assets/ewworkspace.png" />
-    <button id="Gmail">
+    <button id="Gmail" style="background-color:#433c68;">
       <img id="gmailIcon" src='./components/Sidebar/icons/gmail.png' alt="Gmail" class="icon" />
       <span class="tooltip">Gmail</span>
     </button>
@@ -77,7 +77,7 @@
         </div>
         <div class="input-container ic2">
           <input type="text" id="shortcutLink" class="input" name="shortcutLink" placeholder=" " required
-            pattern="https://.*" title="O link deve começar com https://">
+            pattern="http*" title="O link deve começar com http:// ou  https://">
           <div class="cut cut-short"></div>
           <label for="shortcutLink" class="placeholder">Link</label>
         </div>

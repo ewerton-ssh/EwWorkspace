@@ -92,6 +92,7 @@ body {
 	padding: 10px 5px;
 	cursor: pointer;
 	position: relative;
+	width: 100%;
 }
 
 .sidebar .icon {

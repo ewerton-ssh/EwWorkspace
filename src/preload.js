@@ -36,9 +36,10 @@ ipcRenderer.on('loadShortcut', (event, shortcut) => {
   function switchApp(button) {
     appKeys.forEach(key => {
       const webviewDOM = document.querySelector(`#webview${key}`);
-      
+      const buttonDOM = document.querySelector(`#${key}`);
       if (webviewDOM) {
         webviewDOM.style.display = `webview${button}` === webviewDOM.id ? '' : 'none';
+        buttonDOM.style.backgroundColor = button === buttonDOM.id? '#433c68' : '';
       }
     });
   }
